@@ -21,15 +21,14 @@
                 <div class="row">
                     <div class="col-lg-7">
 
-                        <div class="row" x-data="{user: {{$user}} }">
+                        <div class="row" x-data="{ user: {{ $user }} }">
                             <h4 class="mb-30">Chi tiết hóa đơn</h4>
-
+                            <input type="text" hidden wire:model="id">
 
 
                             <div class="row shipping_calculator">
                                 <div class="form-group col-lg-6">
-                                    <input type="text" name="fname"  x-bind:value="user.name" wire:model="name"
-                                        placeholder="Họ tên *">
+                                    <input type="text" name="fname" wire:model="name" placeholder="Họ tên *">
                                     <div style="color:red;">
                                         @error('name')
                                             {{ $message }}
@@ -37,8 +36,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <input type="email" name="lname"  x-bind:value="user.email" wire:model="email"
-                                        placeholder="Email *">
+                                    <input type="email" name="lname" wire:model="email" placeholder="Email *">
                                     <div style="color:red;">
                                         @error('email')
                                             {{ $message }}
@@ -51,7 +49,8 @@
 
                                 <div class="form-group col-lg-6">
                                     <div class=" " style="">
-                                        <select class="" style="height: 64px;border: 1px solid #ececec;border-radius: 10px;padding: 0 12px;" 
+                                        <select class=""
+                                            style="height: 64px;border: 1px solid #ececec;border-radius: 10px;padding: 0 12px;"
                                             x-bind:value="user.city" wire:model.live="city">
                                             <option selected>Lựa chọn tỉnh, thành phố...</option>
                                             @foreach (\Kjmtrue\VietnamZone\Models\Province::all() as $item)
@@ -68,7 +67,7 @@
                                 </div>
 
                                 <div class="form-group col-lg-6">
-                                    <input type="text" x-bind:value="user.phone" wire:model="phone" 
+                                    <input type="text" x-bind:value="user.phone" wire:model="phone"
                                         placeholder="Phone*">
                                     <div style="color:red;">
                                         @error('phone')
@@ -82,7 +81,8 @@
 
                                 <div class="form-group col-lg-6">
                                     <div class="">
-                                        <select class="" style="height: 64px;border: 1px solid #ececec;border-radius: 10px;padding: 0 12px;"  
+                                        <select class=""
+                                            style="height: 64px;border: 1px solid #ececec;border-radius: 10px;padding: 0 12px;"
                                             x-bind:value="user.district" wire:model="district">
                                             <option value="" selected>Lựa chọn quận, huyện...
                                             </option>
@@ -100,8 +100,8 @@
                                 </div>
 
                                 <div class="form-group col-lg-6">
-                                    <input type="text" name="full_address" 
-                                        x-bind:value="user.full_address" wire:model="full_address" placeholder="Địa chỉ cụ thể *">
+                                    <input type="text" name="full_address" x-bind:value="user.full_address"
+                                        wire:model="full_address" placeholder="Địa chỉ cụ thể *">
                                     <div style="color:red;">
                                         @error('full_address')
                                             {{ $message }}
@@ -206,8 +206,17 @@
                                             <td class="cart_total_label">
                                                 <h6 class="text-muted">Tổng tiền cần thanh toán</h6>
                                             </td>
-                                            <td class="cart_total_amount">
-                                                <h4 class="text-brand text-end">{{ number_format($total, 0, '', ',') }}
+
+                                            @php
+                                                if ($couponPercent) {
+                                                    $total = \Cart::subtotal() - \Cart::subtotal() * ($couponPercent->percent / 100);
+                                                } else {
+                                                    $total = \Cart::subtotal();
+                                                }
+                                            @endphp
+                                            <td class="cart_total_amount" >
+                                                <h4 class="text-brand text-end">
+                                                    {{ number_format($total, 0, '', ',') }}
                                                     VNĐ</h4>
                                             </td>
                                         </tr>
@@ -219,7 +228,7 @@
                             <h4 class="mb-30">Phương thức thanh toán</h4>
                             <div class="payment_option">
                                 <div class="custome-radio">
-                                    <input class="form-check-input" type="radio" value="back"
+                                    <input class="form-check-input" type="radio" value="bank"
                                         id="exampleRadios3" checked="" wire:model="payment">
                                     <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse"
                                         data-target="#bankTranfer" aria-controls="bankTranfer">Chuyển khoản ngân
@@ -256,4 +265,7 @@
             </form>
         </div>
     </main>
+    <script>
+        
+    </script>
 </div>

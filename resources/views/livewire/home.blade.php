@@ -1,6 +1,9 @@
 <div>
     <main class="main">
 
+        @if (session('success'))
+            <span>{{session('success')}}</span>
+        @endif
         
         <!--End hero slider-->
         
@@ -21,7 +24,7 @@
         <!--Products Tabs-->
 
 
-        {{-- <livewire:product-sales /> --}}
+        <livewire:product-sales />
         <!--End Best Sales-->
 
         <!-- TV Category -->

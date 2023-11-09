@@ -7,6 +7,7 @@ use Livewire\Component;
 use WireUi\Traits\Actions;
 use App\Livewire\CartBooks;
 use Livewire\Attributes\Js;
+use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -18,6 +19,7 @@ class ViewBookTabs extends Component
 
     public $carts;
 
+    #[On('add-to-cart')] 
     public function  addToCart($id = null)
     {
         if ($id) {
@@ -33,7 +35,7 @@ class ViewBookTabs extends Component
                 ]
             ]);
 
-            $this->dispatch('add-to-cart');
+            $this->dispatch('update-mini-cart');
 
             return $this->js(<<<JAVASCRIPT
                     Swal.fire({

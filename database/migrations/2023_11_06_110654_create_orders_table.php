@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->date('date_order');
+            $table->integer('total_price');
+            $table->string('payment');
+            $table->text('note')->nullable();
+            $table->text('return_reason')->nullable();
+            $table->string('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

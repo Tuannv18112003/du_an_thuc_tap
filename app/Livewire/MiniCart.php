@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class MiniCart extends Component
 {
+    #[On('update-mini-cart')]
     public function render()
     {
         $carts = Cart::content();

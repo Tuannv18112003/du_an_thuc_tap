@@ -2,15 +2,22 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Orders;
+use App\Models\OrdersDetail;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use Illuminate\Http\Request;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Http\Request;
 
 class CheckOut extends Component
 {
+
+    public $id;
 
     #[Rule('required|min:3')]
     public $name;
@@ -36,17 +43,64 @@ class CheckOut extends Component
     #[Rule('required')]
     public $payment;
 
+
     public function mount() {
         if (!Auth::check()) {
             return redirect(route('login'));
         }
+
+        $user = Auth::user();
+        $this->id = $user->id;
+        $this->name = $user->name;
+        $this->email = $user->email;
     }
+
 
     public function save()
     {
+
         $this->validate();
-        dd($this->all());
-        
+        $couponPercent = session()->get('coupon');
+        if ($couponPercent) {
+            $total = Cart::subtotal() - Cart::subtotal() * ($couponPercent->percent / 100);
+        } else {
+            $total = Cart::subtotal();
+        }
+
+        if($this->payment == 'delivery') {
+            $carts = Cart::content();
+            User::where('id', $this->id)->update($this->only('name', 'email', 'phone', 'city', 'district', 'full_address'));
+            
+
+            $user_id = $this->id;
+            $date_order = Carbon::now();
+
+
+            $order = Orders::create([
+                'user_id' => $user_id,
+                'date_order' => $date_order,
+                'total_price' => $total,
+                'payment' => $this->payment,
+                'note' => $this->note
+
+            ]);
+
+            foreach($carts as $item) {
+                OrdersDetail::create([
+                    'order_id'=> $order->id,
+                    'book_id' => $item->id,
+                    'quantity' => $item->qty,
+                    'price' => $item->price - $item->price * ($item->options->discount_price / 100)
+                ]);
+            }
+
+            Cart::destroy();
+
+            session()->flash('success', 'Đặt hàng thành công');
+
+            return redirect('/');
+        }
+
     }
 
 

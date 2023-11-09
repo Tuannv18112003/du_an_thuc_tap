@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BooksStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,6 +26,7 @@ class Books extends Model
 
     protected $casts = [
         'multi_image' => 'array',
+        // 'status' =>  BooksStatus::class
     ];
 
     public function categories() {
