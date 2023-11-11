@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Resources\BooksResource;
 use App\Filament\Resources\UsersResource;
+use App\Http\Middleware\CheckAdmin;
 use App\Providers\Filament\AvatarProviders\BoringAvatarsProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -36,7 +37,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->authGuard('admin')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
@@ -61,9 +61,10 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
+                ])
+                ->authMiddleware([
+                    Authenticate::class,
+                    CheckAdmin::class
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()->label('Edit profile'),

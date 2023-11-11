@@ -16,12 +16,15 @@
     <link rel="stylesheet" href="{{ asset('front-end/assets/css/plugins/animate.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('front-end/assets/css/plugins/slider-range.css') }}" />
     <link rel="stylesheet" href="{{ asset('front-end/assets/css/main.css?v=5.3') }}" />
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <title>{{ $title ?? 'Page Title' }} - BookShop</title>
 </head>
 
 <body>
     <!-- Modal -->
+
+    @if (session('success'))
+        <span>{{ session('success') }}</span>
+    @endif
 
     <!-- Quick view -->
     <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
@@ -267,47 +270,43 @@
                                     </a>
                                     <a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
                                 </div>
-                                <livewire:mini-cart/>
+                                <livewire:mini-cart />
                                 <div class="header-action-icon-2">
-                                    <a href="page-account.html">
+                                    <a href="/tai-khoan">
                                         <img class="svgInject" alt="Nest"
                                             src="{{ asset('front-end/assets/imgs/theme/icons/icon-user.svg') }}" />
                                     </a>
                                     @if (Auth::user())
-                                        <a href="page-account.html"><span class="lable ml-0">Tài khoản</span></a>
-                                    <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                                        <ul>
-                                            <li>
-                                                <a href="page-account.html"><i class="fi fi-rs-user mr-10"></i>My
-                                                    Account</a>
-                                            </li>
-                                            <li>
-                                                <a href="page-account.html"><i
-                                                        class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
-                                            </li>
-                                            <li>
-                                                <a href="page-account.html"><i class="fi fi-rs-label mr-10"></i>My
-                                                    Voucher</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My
-                                                    Wishlist</a>
-                                            </li>
-                                            <li>
-                                                <a href="page-account.html"><i
-                                                        class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('logout')}}"><i class="fi fi-rs-sign-out mr-10"></i>Đăng xuất</a>
-                                            </li>
+                                        <a href=""><span class="lable ml-0">{{Auth::user()->name}}</span></a>
+                                        <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                            <ul>
+                                                <li>
+                                                    <a href="tai-khoan"><i
+                                                            class="fi fi-rs-bell mr-10"></i>Thông báo</a>
+                                                </li>
+                                                <li>
+                                                    <a href=""><i class="fi fi-rs-user mr-10"></i>Tài khoản của
+                                                        tôi</a>
+                                                </li>
+                                                <li>
+                                                    <a href="tai-khoan"><i
+                                                            class="fi fi-rs-location-alt mr-10"></i>Kiểm
+                                                        tra đơn hàng</a>
+                                                </li>
+                                                <li x-data="{ logout() { document.getElementById('logout').submit() } }">
+                                                    <a href="" x-on:click.prevent="logout"><i
+                                                            class="fi fi-rs-sign-out mr-10"></i>Đăng xuất</a>
+                                                    <form action="{{ route('logout') }}" method="POST"
+                                                        id="logout">
+                                                        @csrf
+                                                    </form>
+                                                </li>
 
-                                            <form action="{{route('logout')}}" method="POST">
-                                                
-                                            </form>
-                                        </ul>
-                                    </div>
+
+                                            </ul>
+                                        </div>
                                     @else
-                                        <a href="{{route('login')}}"><span class="lable ml-0">Đăng nhập</span></a>
+                                        <a href="{{ route('login') }}"><span class="lable ml-0">Đăng nhập</span></a>
                                     @endif
                                 </div>
                             </div>
@@ -655,8 +654,7 @@
                                     alt="" />
                             </div>
                             <div class="banner-text">
-                                <h3 class="icon-box-title">Best prices & offers</h3>
-                                <p>Orders $50 or more</p>
+                                <h3 class="icon-box-title">Giá ưu đãi và tốt nhất</h3>
                             </div>
                         </div>
                     </div>
@@ -668,8 +666,7 @@
                                     alt="" />
                             </div>
                             <div class="banner-text">
-                                <h3 class="icon-box-title">Free delivery</h3>
-                                <p>24/7 amazing services</p>
+                                <h3 class="icon-box-title">Miễn phí vận chuyển</h3>
                             </div>
                         </div>
                     </div>
@@ -681,8 +678,7 @@
                                     alt="" />
                             </div>
                             <div class="banner-text">
-                                <h3 class="icon-box-title">Great daily deal</h3>
-                                <p>When you sign up</p>
+                                <h3 class="icon-box-title">Ưu đãi cực lớn</h3>
                             </div>
                         </div>
                     </div>
@@ -694,8 +690,7 @@
                                     alt="" />
                             </div>
                             <div class="banner-text">
-                                <h3 class="icon-box-title">Wide assortment</h3>
-                                <p>Mega Discounts</p>
+                                <h3 class="icon-box-title">Thể loại đa dạng</h3>
                             </div>
                         </div>
                     </div>
@@ -707,8 +702,7 @@
                                     alt="" />
                             </div>
                             <div class="banner-text">
-                                <h3 class="icon-box-title">Easy returns</h3>
-                                <p>Within 30 days</p>
+                                <h3 class="icon-box-title">Trả hàng dễ dàng</h3>
                             </div>
                         </div>
                     </div>
@@ -725,6 +719,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -857,9 +852,13 @@
             </div>
         </div>
     </div>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script>
+    <x-livewire-alert::flash />
+
     <!-- Vendor JS-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> --}}
     <script src="{{ asset('front-end/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
     <script src="{{ asset('front-end/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('front-end/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
@@ -886,12 +885,6 @@
 
     <script src="{{ asset('front-end/assets/js/main.js?v=5.3') }}"></script>
     <script src="{{ asset('front-end/assets/js/shop.js?v=5.3') }}"></script>
-
-    {{-- <script data-navigate-once>
-        document.addEventListener('livewire:navigated', () => {
-            initFlowbite();
-        })
-    </script> --}}
     @stack('scripts')
 </body>
 

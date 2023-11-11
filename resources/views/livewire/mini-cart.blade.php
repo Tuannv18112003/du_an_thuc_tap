@@ -28,11 +28,13 @@
             </ul>
             <div class="shopping-cart-footer">
                 <div class="shopping-cart-total">
-                    <h4>Total <span>$4000.00</span></h4>
+                    <h4>Tổng tiền <span>{{number_format(\Cart::subtotal(), 0, '', ',')}} VNĐ</span></h4>
                 </div>
                 <div class="shopping-cart-button">
-                    <a href="shop-cart.html" class="outline">View cart</a>
-                    <a href="shop-checkout.html">Checkout</a>
+                    <a href="/gio-hang" class="outline">Xem giỏ hàng</a>
+                    @if (count($carts) == 0)
+                        <a href="/thanh-toan">Thanh toán</a>
+                    @endif
                 </div>
             </div>
         </div>

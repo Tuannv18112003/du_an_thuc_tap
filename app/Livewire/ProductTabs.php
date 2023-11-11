@@ -14,9 +14,7 @@ class ProductTabs extends Component
 
     public $categories;
 
-    protected $paginationTheme = 'bootstrap';
 
-    // public $books;
     private $query = '';
 
     public function mount() {
@@ -25,19 +23,14 @@ class ProductTabs extends Component
     }
 
 
-    // public function paginationView()
-    // {
-    //     return 'custom-pagination-links-view';
-    // }
 
     public function boot() {
         $this->query = Books::orderBy('created_at', 'desc')->get();
     }
     
     public function filterCategory($id = null) {
-        $this->resetPage();
         if($id) {
-            return $this->query = Books::orderBy('created_at', 'desc')->limit(10)->where('category_id', $id)->get();
+            return $this->query = Books::orderBy('created_at', 'desc')->limit(8)->where('category_id', $id)->get();
         }
         
     }

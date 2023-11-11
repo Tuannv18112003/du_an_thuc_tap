@@ -19,8 +19,10 @@ class CouponsResource extends Resource
 {
     protected static ?string $model = Coupons::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
+    protected static ?string $navigationGroup = 'Quản lý dữ liệu';
+    
     public static function form(Form $form): Form
     {
         return $form
@@ -68,5 +70,10 @@ class CouponsResource extends Resource
         return [
             'index' => Pages\ManageCoupons::route('/'),
         ];
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('mã giảm giá');
     }
 }

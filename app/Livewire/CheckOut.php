@@ -5,18 +5,20 @@ namespace App\Livewire;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Orders;
-use App\Models\OrdersDetail;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use App\Models\OrdersDetail;
 use Illuminate\Http\Request;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CheckOut extends Component
 {
 
+    use LivewireAlert;
     public $id;
 
     #[Rule('required|min:3')]
@@ -47,6 +49,12 @@ class CheckOut extends Component
     public function mount() {
         if (!Auth::check()) {
             return redirect(route('login'));
+        }
+
+        $carts = Cart::content();
+        if(count($carts) == 0) {
+            session()->flash('error', 'Bạn cần có sản phẩm trong giỏ hàng');
+            return redirect('/gio-hang');   
         }
 
         $user = Auth::user();

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Livewire\AccountPage;
 use App\Livewire\CheckOut;
 
 // use Illuminate\Routing\Route;
@@ -49,6 +50,7 @@ Route::get('cua-hang/{slug?}', ShopBooks::class);
 // Route::get('cart', [CartController::class, 'index']);
 Route::get('gio-hang', CartBooks::class);
 Route::get('thanh-toan', CheckOut::class);
+Route::get('tai-khoan', AccountPage::class)->middleware('auth');
 
 
 Auth::routes();

@@ -10,9 +10,11 @@ use Livewire\Attributes\Js;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ViewBookTabs extends Component
 {
+    use LivewireAlert;
     public $type;
 
     public $item;
@@ -35,18 +37,11 @@ class ViewBookTabs extends Component
                 ]
             ]);
 
+            
+
             $this->dispatch('update-mini-cart');
 
-            return $this->js(<<<JAVASCRIPT
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        idth: 600, 
-                        title: 'Thêm vào giỏ hàng thành công',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                JAVASCRIPT);
+            $this->alert('success', 'Thêm sản phẩm vào giỏ hàng thành công');
         }
     }
 

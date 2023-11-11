@@ -1,5 +1,5 @@
 <x-layouts.layout-client>
-     <main class="main pages">
+    <main class="main pages">
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
