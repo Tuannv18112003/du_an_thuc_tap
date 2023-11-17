@@ -73,6 +73,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                
             ])
+            ->databaseNotifications()
             ->sidebarCollapsibleOnDesktop()
             ->login()
             ->registration()
