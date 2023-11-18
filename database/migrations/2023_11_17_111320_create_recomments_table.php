@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('recomments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('comment_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('comment_id')->unsigned();
             $table->string('comment');
             $table->softDeletes();
             $table->timestamps();

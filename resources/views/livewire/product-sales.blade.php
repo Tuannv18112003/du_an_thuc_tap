@@ -70,7 +70,7 @@
                                                             VNĐ</span>
                                                     @endif
                                                 </div>
-                                                <a wire:click.prevent="$dispatch('add-to-cart', { id: {{$item->id}} })"class="btn w-100 hover-up"><i
+                                                <a wire:click.prevent="$dispatch('add-to-cart', { id: {{$item->id}} })" class="btn w-100 hover-up"><i
                                                         class="fi-rs-shopping-cart mr-5" ></i>Thêm vào giỏ hàng</a>
                                             </div>
                                         </div>

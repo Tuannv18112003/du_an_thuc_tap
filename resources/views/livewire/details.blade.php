@@ -4,7 +4,8 @@
             <div class="container">
                 <div class="breadcrumb">
                     <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Trang chủ</a>
-                    <span></span> <a href="">{{$bookDetail->categories->name}}</a> <span></span> {{$bookDetail->name}}
+                    <span></span> <a href="">{{ $bookDetail->categories->name }}</a> <span></span>
+                    {{ $bookDetail->name }}
                 </div>
             </div>
         </div>
@@ -18,16 +19,17 @@
                                     <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                                     <!-- MAIN SLIDES -->
                                     <div class="product-image-slider">
-                                        @foreach($bookDetail->multi_image as $item)
-                                        <figure class="border-radius-10">
-                                            <img src="{{asset('/storage/' . $item)}}" alt="product image" />
-                                        </figure>
+                                        @foreach ($bookDetail->multi_image as $item)
+                                            <figure class="border-radius-10">
+                                                <img src="{{ asset('/storage/' . $item) }}" alt="product image" />
+                                            </figure>
                                         @endforeach
                                     </div>
                                     <!-- THUMBNAILS -->
                                     <div class="slider-nav-thumbnails">
-                                        @foreach($bookDetail->multi_image as $item)   
-                                            <div><img src="{{asset('/storage/' . $item)}}" alt="product image" /></div>
+                                        @foreach ($bookDetail->multi_image as $item)
+                                            <div><img src="{{ asset('/storage/' . $item) }}" alt="product image" />
+                                            </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -36,9 +38,9 @@
                             <div class="col-md-6 col-sm-12 col-xs-12">
                                 <div class="detail-info pr-30 pl-30">
                                     @if ($bookDetail->discount_price > 0)
-                                    <span class="stock-status out-stock"> Giảm giá </span>
+                                        <span class="stock-status out-stock"> Giảm giá </span>
                                     @endif
-                                    <h2 class="title-detail">{{$bookDetail->name}}</h2>
+                                    <h2 class="title-detail">{{ $bookDetail->name }}</h2>
                                     <div class="product-detail-rating">
                                         <div class="product-rate-cover text-end">
                                             <div class="product-rate d-inline-block">
@@ -49,14 +51,19 @@
                                     </div>
                                     <div class="clearfix product-price-cover">
                                         <div class="product-price primary-color float-left">
-                                                @php
-                                                    $disount_price = $bookDetail->selling_price - ($bookDetail->selling_price * ($bookDetail->discount_price / 100));
-                                                @endphp
-                                            <span class="current-price text-brand">{{number_format($disount_price, 0, '', ',')}} VNĐ</span>
+                                            @php
+                                                $disount_price = $bookDetail->selling_price - $bookDetail->selling_price * ($bookDetail->discount_price / 100);
+                                            @endphp
+                                            <span
+                                                class="current-price text-brand">{{ number_format($disount_price, 0, '', ',') }}
+                                                VNĐ</span>
                                             <span>
-                                                <span class="save-price font-md color3 ml-15">Sale {{$bookDetail->discount_price}} % </span>
-                                                @if($bookDetail->discount_price > 0) 
-                                                    <span class="old-price font-md ml-15">{{number_format($bookDetail->selling_price, 0, '', ',')}} VNĐ</span>
+                                                <span class="save-price font-md color3 ml-15">Sale
+                                                    {{ $bookDetail->discount_price }} % </span>
+                                                @if ($bookDetail->discount_price > 0)
+                                                    <span
+                                                        class="old-price font-md ml-15">{{ number_format($bookDetail->selling_price, 0, '', ',') }}
+                                                        VNĐ</span>
                                                 @endif
                                             </span>
                                         </div>
@@ -65,25 +72,30 @@
                                         <p class="font-lg"></p>
                                     </div>
                                     <div class="detail-extralink mb-50">
-                                        <div class="detail-qty border radius">
+                                        {{-- <div class="detail-qty border radius">
                                             <a href="#" class="qty-down"><i
                                                     class="fi-rs-angle-small-down"></i></a>
                                             <input type="text" name="quantity" class="qty-val" value="1"
                                                 min="1">
                                             <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                        </div>
+                                        </div> --}}
                                         <div class="product-extra-link2">
-                                            <button type="submit" class="button button-add-to-cart"><i
-                                                    class="fi-rs-shopping-cart"></i>Add to cart</button>
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up"
-                                                href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                            <a aria-label="Compare" class="action-btn hover-up"
-                                                href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+                                            <button type="button" class="button button-add-to-cart"
+                                             wire:click="$dispatch('add-to-cart', { id: {{$bookDetail->id}} })"
+                                            ><i
+                                                    class="fi-rs-shopping-cart"></i>
+                                                Thêm giỏ hàng
+                                            </button>
+                                            <a aria-label="" class="action-btn hover-up" href=""><i
+                                                    class="fi-rs-heart"></i></a>
+                                            <a aria-label="Compare" class="action-btn hover-up" href=""><i
+                                                    class="fi-rs-shuffle"></i></a>
                                         </div>
                                     </div>
                                     <div class="font-xs">
                                         <ul class="mr-50 float-start">
-                                            <li class="mb-5">Thể loại: <span class="text-brand">{{$bookDetail->categories->name}}</span></li>
+                                            <li class="mb-5">Thể loại: <span
+                                                    class="text-brand">{{ $bookDetail->categories->name }}</span></li>
                                             <li class="mb-5">Tác giả:<span class="text-brand"> Jun 4.2022</span></li>
                                         </ul>
                                     </div>
@@ -98,117 +110,30 @@
                                         <a class="nav-link active" id="Description-tab" data-bs-toggle="tab"
                                             href="#Description">Mô tả</a>
                                     </li>
-        
+
                                     <li class="nav-item">
-                                        <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab"
-                                            href="#Reviews">Đánh giá (3)</a>
+                                        <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Đánh
+                                            giá</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content shop_info_tab entry-main-content">
                                     <div class="tab-pane fade show active" id="Description">
                                         <div class="">
-                                            {!!$bookDetail->description!!}
+                                            {!! $bookDetail->description !!}
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="Reviews">
+
+                                        <livewire:comments.comments :idBook="$bookDetail->id" />
+
                                         <!--Comments-->
                                         <div class="comments-area">
                                             <div class="row">
                                                 <div class="col-lg-8">
-                                                    <h4 class="mb-30">Customer questions & answers</h4>
-                                                    <div class="comment-list">
-                                                        <div
-                                                            class="single-comment justify-content-between d-flex mb-30">
-                                                            <div class="user justify-content-between d-flex">
-                                                                <div class="thumb text-center">
-                                                                    <img src="{{asset('front-end/assets/imgs/blog/author-2.png')}}"
-                                                                        alt="" />
-                                                                    <a href="#"
-                                                                        class="font-heading text-brand">Sienna</a>
-                                                                </div>
-                                                                <div class="desc">
-                                                                    <div class="d-flex justify-content-between mb-10">
-                                                                        <div class="d-flex align-items-center">
-                                                                            <span class="font-xs text-muted">December
-                                                                                4, 2022 at 3:12 pm </span>
-                                                                        </div>
-                                                                        <div class="product-rate d-inline-block">
-                                                                            <div class="product-rating"
-                                                                                style="width: 100%"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p class="mb-10">Lorem ipsum dolor sit amet,
-                                                                        consectetur adipisicing elit. Delectus, suscipit
-                                                                        exercitationem accusantium obcaecati quos
-                                                                        voluptate nesciunt facilis itaque modi commodi
-                                                                        dignissimos sequi repudiandae minus ab deleniti
-                                                                        totam officia id incidunt? <a href="#"
-                                                                            class="reply">Reply</a></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="single-comment justify-content-between d-flex mb-30 ml-30">
-                                                            <div class="user justify-content-between d-flex">
-                                                                <div class="thumb text-center">
-                                                                    <img src="{{asset('front-end/assets/imgs/blog/author-3.png')}}"
-                                                                        alt="" />
-                                                                    <a href="#"
-                                                                        class="font-heading text-brand">Brenna</a>
-                                                                </div>
-                                                                <div class="desc">
-                                                                    <div class="d-flex justify-content-between mb-10">
-                                                                        <div class="d-flex align-items-center">
-                                                                            <span class="font-xs text-muted">December
-                                                                                4, 2022 at 3:12 pm </span>
-                                                                        </div>
-                                                                        <div class="product-rate d-inline-block">
-                                                                            <div class="product-rating"
-                                                                                style="width: 80%"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p class="mb-10">Lorem ipsum dolor sit amet,
-                                                                        consectetur adipisicing elit. Delectus, suscipit
-                                                                        exercitationem accusantium obcaecati quos
-                                                                        voluptate nesciunt facilis itaque modi commodi
-                                                                        dignissimos sequi repudiandae minus ab deleniti
-                                                                        totam officia id incidunt? <a href="#"
-                                                                            class="reply">Reply</a></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="single-comment justify-content-between d-flex">
-                                                            <div class="user justify-content-between d-flex">
-                                                                <div class="thumb text-center">
-                                                                    <img src="{{asset('front-end/assets/imgs/blog/author-4.png')}}"
-                                                                        alt="" />
-                                                                    <a href="#"
-                                                                        class="font-heading text-brand">Gemma</a>
-                                                                </div>
-                                                                <div class="desc">
-                                                                    <div class="d-flex justify-content-between mb-10">
-                                                                        <div class="d-flex align-items-center">
-                                                                            <span class="font-xs text-muted">December
-                                                                                4, 2022 at 3:12 pm </span>
-                                                                        </div>
-                                                                        <div class="product-rate d-inline-block">
-                                                                            <div class="product-rating"
-                                                                                style="width: 80%"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p class="mb-10">Lorem ipsum dolor sit amet,
-                                                                        consectetur adipisicing elit. Delectus, suscipit
-                                                                        exercitationem accusantium obcaecati quos
-                                                                        voluptate nesciunt facilis itaque modi commodi
-                                                                        dignissimos sequi repudiandae minus ab deleniti
-                                                                        totam officia id incidunt? <a href="#"
-                                                                            class="reply">Reply</a></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <h4 class="mb-30">Bình luận</h4>
+                                                    <livewire:comments.list-comments :idBook="$bookDetail->id" lazy />
                                                 </div>
-                                                <div class="col-lg-4">
+                                                {{-- <div class="col-lg-4">
                                                     <h4 class="mb-30">Customer reviews</h4>
                                                     <div class="d-flex mb-30">
                                                         <div class="product-rate d-inline-block mr-15">
@@ -248,55 +173,10 @@
                                                     </div>
                                                     <a href="#" class="font-xs text-muted">How are ratings
                                                         calculated?</a>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         <!--comment form-->
-                                        <div class="comment-form">
-                                            <h4 class="mb-15">Add a review</h4>
-                                            <div class="product-rate d-inline-block mb-30"></div>
-                                            <div class="row">
-                                                <div class="col-lg-8 col-md-12">
-                                                    <form class="form-contact comment_form" action="#"
-                                                        id="commentForm">
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="form-group">
-                                                                    <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
-                                                                        placeholder="Write Comment"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="form-group">
-                                                                    <input class="form-control" name="name"
-                                                                        id="name" type="text"
-                                                                        placeholder="Name" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="form-group">
-                                                                    <input class="form-control" name="email"
-                                                                        id="email" type="email"
-                                                                        placeholder="Email" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div class="form-group">
-                                                                    <input class="form-control" name="website"
-                                                                        id="website" type="text"
-                                                                        placeholder="Website" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button type="submit"
-                                                                class="button button-contactForm">Submit
-                                                                Review</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -313,8 +193,10 @@
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html" tabindex="0">
                                                         <img class="default-img"
-                                                            src="{{asset('front-end/assets/imgs/shop/product-2-1.jpg')}}" alt="" />
-                                                        <img class="hover-img" src="{{asset('front-end/assets/imgs/shop/product-2-2.jpg')}}"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-2-1.jpg') }}"
+                                                            alt="" />
+                                                        <img class="hover-img"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-2-2.jpg') }}"
                                                             alt="" />
                                                     </a>
                                                 </div>
@@ -352,8 +234,10 @@
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html" tabindex="0">
                                                         <img class="default-img"
-                                                            src="{{asset('front-end/assets/imgs/shop/product-3-1.jpg')}}" alt="" />
-                                                        <img class="hover-img" src="{{asset('front-end/assets/imgs/shop/product-4-2.jpg')}}"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-3-1.jpg') }}"
+                                                            alt="" />
+                                                        <img class="hover-img"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-4-2.jpg') }}"
                                                             alt="" />
                                                     </a>
                                                 </div>
@@ -391,8 +275,10 @@
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html" tabindex="0">
                                                         <img class="default-img"
-                                                            src="{{asset('front-end/assets/imgs/shop/product-4-1.jpg')}}" alt="" />
-                                                        <img class="hover-img" src="{{asset('front-end/assets/imgs/shop/product-4-2.jpg')}}"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-4-1.jpg') }}"
+                                                            alt="" />
+                                                        <img class="hover-img"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-4-2.jpg') }}"
                                                             alt="" />
                                                     </a>
                                                 </div>
@@ -430,8 +316,10 @@
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html" tabindex="0">
                                                         <img class="default-img"
-                                                            src="{{asset('front-end/assets/imgs/shop/product-5-1.jpg')}}" alt="" />
-                                                        <img class="hover-img" src="{{asset('front-end/assets/imgs/shop/product-3-2.jpg')}}"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-5-1.jpg') }}"
+                                                            alt="" />
+                                                        <img class="hover-img"
+                                                            src="{{ asset('front-end/assets/imgs/shop/product-3-2.jpg') }}"
                                                             alt="" />
                                                     </a>
                                                 </div>

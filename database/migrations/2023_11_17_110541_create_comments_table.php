@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('book_id')->unsigned();
             $table->string('comment');
-            $table->integer('rating');
+            $table->integer('rating')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

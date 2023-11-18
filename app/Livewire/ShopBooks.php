@@ -68,7 +68,7 @@ class ShopBooks extends Component
 
         return view('livewire.shop-books', [
             'categories' => $categories,
-            'books' => $books->paginate(4),
+            'books' => $books->get(),
         ]);
     }
 }

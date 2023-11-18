@@ -76,7 +76,7 @@
                             <livewire:view-book-tabs wire:key="{{ $item->id }}" :$item />
                         @endforeach
                         <!--end product card-->
-                        {{$books->links()}}
+                        {{-- {{$books->links()}} --}}
                     </div>
                     <!--product grid-->
                     <div class="pagination-area mt-20 mb-20">
