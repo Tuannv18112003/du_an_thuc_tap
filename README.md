@@ -1,5 +1,5 @@
 
---------------- GIỚI THIỆU DỰ ÁN ---------------
+# --------------- GIỚI THIỆU DỰ ÁN ---------------
 
 
 # Đề tài 
@@ -33,3 +33,11 @@
     `php artisan vietnamzone:import`
 
     `php artisan serve` 
+
+
+# Để biết thêm thông tin về thư viện sử dụng
+    - https://laravel.com/
+
+    - https://livewire.laravel.com/
+
+    - https://filamentphp.com/docs
