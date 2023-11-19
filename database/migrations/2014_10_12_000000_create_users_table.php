@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->integer('phone')->nullable();
             $table->string('address')->nullable();
-            $table->tinyInteger('role')->default(0);
+            $table->tinyInteger('is_admin')->default(0);
             $table->timestamps();
         });
     }

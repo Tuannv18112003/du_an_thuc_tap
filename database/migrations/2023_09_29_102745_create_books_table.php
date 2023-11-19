@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('slug', 100);
             $table->integer('selling_price');
-            $table->integer('rating');
+            $table->integer('rating')->nullable();
             $table->integer('discount_price')->nullable();
             $table->string('image');
             $table->string('multi_image');

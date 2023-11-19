@@ -35,6 +35,16 @@
     `php artisan serve` 
 
 
+# Để truy cập vào admin
+
+Sử dụng tài khoản:
+    admin@gmail.com
+
+Mật khẩu:
+    12345678
+
+
+
 # Để biết thêm thông tin về thư viện sử dụng
     - https://laravel.com/
 
